@@ -1,0 +1,170 @@
+﻿<Window x:Class="PCMonitor.View.MonitorMainWindow"
+        x:Name="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PCMonitor.View"
+        xmlns:vm="clr-namespace:PCMonitor.ViewModel"
+        mc:Ignorable="d"
+        Height="520"
+        Width="450">
+
+    <!-- link resources / viewmodels -->
+    <Window.Resources>
+        <vm:MainVM x:Key="vm"/>
+    </Window.Resources>
+    
+    <!-- main -->
+    <DockPanel DataContext="{StaticResource vm}">
+
+        <Menu DockPanel.Dock="Top"
+              Background="LightGray">
+            <MenuItem Header="File">
+                <MenuItem Header="Reset max load values"
+                          Command="{Binding CmdResetSessionLoads}"/>
+                <MenuItem Header="Reset max temperature values"
+                          Command="{Binding CmdResetSessionTemperatures}"/>
+                <Separator/>
+                <MenuItem Header="Reset all max values"
+                          Command="{Binding CmdResetAllMaxValues}"/>
+                <Separator/>
+                <MenuItem Header="Exit"
+                          Click="ExitMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Options">
+                
+            </MenuItem>
+            <MenuItem Header="About">
+                
+            </MenuItem>
+        </Menu>
+        
+        <!-- main grid for everything below menu items -->
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/> <!-- info panel, pc name, os etc -->
+                <RowDefinition Height="auto"/> <!-- cpu -->
+                <RowDefinition Height="auto"/> <!-- gpu -->
+                <RowDefinition Height="auto"/> <!-- memory -->
+                <RowDefinition Height="*"/> <!-- rest of the space -->
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0">
+                <Border BorderThickness="1"
+                        BorderBrush="Black">
+                    <StackPanel DockPanel.Dock="Top">
+                        <Label Content="System info"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="OS:"/>
+                            <Label Content="{Binding OsType}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="User@Device name:"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding UserName}"/>
+                                <Label Content="@"/>
+                                <Label Content="{Binding MachineName}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Motherboard:"/>
+                            <Label Content="{Binding MotherBoardName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+            <DockPanel Grid.Row="1">
+                <Border BorderThickness="1"
+                        BorderBrush="Black">
+                    <StackPanel DockPanel.Dock="Top">
+                        <Label Content="CPU"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Type:"/>
+                            <Label Content="{Binding CpuType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Load:"/>
+                            <Label Content="{Binding CpuLoad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Temperature:"/>
+                            <Label Content="{Binding CpuTemp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Clock:"/>
+                            <Label Content="{Binding CpuClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Fan:"/>
+                            <Label Content="{Binding CpuFan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+            <DockPanel Grid.Row="2">
+                <Border BorderThickness="1"
+                        BorderBrush="Black">
+                    <StackPanel DockPanel.Dock="Top">
+                        <Label Content="GPU"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Type:"/>
+                            <Label Content="{Binding GpuType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Load:"/>
+                            <Label Content="{Binding GpuLoad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Temperature:"/>
+                            <Label Content="{Binding GpuTemp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Clock:"/>
+                            <Label Content="{Binding GpuClock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Fan:"/>
+                            <Label Content="{Binding GpuFan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Memory in use / free:"/>
+                            <Label Content="{Binding GpuMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+            <DockPanel Grid.Row="3">
+                <Border BorderThickness="1"
+                        BorderBrush="Black">
+                    <StackPanel DockPanel.Dock="Top">
+                        <Label Content="RAM"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Info:"/>
+                            <Label Content="{Binding RamInfo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,-8">
+                            <Label Content="Total amount:"/>
+                            <Label Content="{Binding RamTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="In use / free:"/>
+                            <Label Content="{Binding RamUsed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+        </Grid>
+        
+    </DockPanel>
+        
+        
+        
+</Window>
